@@ -1,14 +1,13 @@
 #include <iostream>
-#include "Log.h"
+
+#define LOG(x) std::cout << x << std::endl
 
 int main()
 {
-	for (int i=0;i<5;i++) 
-	{
-		if (i % 2 == 0)
-			continue;
-		Log("Hello World!");
-	}
-
+	int var = 8;
+	int* ptr; //declare pointer
+	ptr = &var; //get address of var by '&'
+	*ptr = 10; //access the value, that ptr points to
+	LOG(var);
 	std::cin.get();
 }
