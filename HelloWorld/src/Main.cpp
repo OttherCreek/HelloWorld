@@ -33,14 +33,19 @@ public:		//public functions
 	}
 };
 
+void Function()
+{
+
+}
+
 int main()
 {
 	Log log;
-	log.SetLevel(log.LogLevelError);
+	log.SetLevel(log.LogLevelInfo);
 	log.Warn("Hello");
-
 	log.Info("Hello");
-
 	log.Error("Hello");
+
+
 	std::cin.get();
 }
