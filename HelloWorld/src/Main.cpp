@@ -1,55 +1,46 @@
 #include <iostream>
 
-#define LOG(x) std::cout << x << std::endl
-
-class Player		//class: all member variables are private by default
+class Log
 {
-	int x, y;
-	int speed;
-
-public:
-	void Move(int xa,int ya)
+public:		//public variables
+	const int LogLevelError = 0;
+	const int LogLevelWarning = 1;
+	const int LogLevelInfo = 2;
+private:
+	int m_LogLevel=LogLevelInfo;
+public:		//public functions
+	void SetLevel(int level)
 	{
-		x += xa * speed;
-		y += ya * speed;
-	}
-};
-
-struct Vec2			//struct: all member variables are public by default
-{
-	int x = NULL;
-	int y = NULL;
-
-	Vec2(int x, int y)
-	{
-		this->x = x;
-		this->y = y;
+		m_LogLevel = level;
 	}
 
-	void Add(const Vec2& other)
+	void Error(const char* message)
 	{
-		x += other.x;
-		y += other.y;
+		if(m_LogLevel>=LogLevelError)
+			std::cout << "[ERROR]: " << message << std::endl;
+	}
+	
+	void Warn(const char* message)
+	{
+		if(m_LogLevel>=LogLevelWarning)
+			std::cout << "[WARNING]: "<< message << std::endl;
 	}
 
-	void ToString()
+	void Info(const char* message)
 	{
-		std::cout << "x = " << x << " | y = " << y << std::endl;
+		if(m_LogLevel>=LogLevelInfo)
+			std::cout << "[INFO]: " << message << std::endl;
 	}
 };
 
 int main()
 {
-	Player player;
-	player.Move(1,-1);
+	Log log;
+	log.SetLevel(log.LogLevelError);
+	log.Warn("Hello");
 
-	Vec2 vector = Vec2(2,5);
-	Vec2 vectorOther = Vec2(3, 1);
+	log.Info("Hello");
 
-	vector.Add(vectorOther);
-
-	vector.ToString();
-
-
+	log.Error("Hello");
 	std::cin.get();
 }
