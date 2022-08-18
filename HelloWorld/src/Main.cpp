@@ -4,10 +4,8 @@
 class Entity
 {
 public:
-	virtual std::string getName()	//virtual indicates that this method can be overriden in a derived child class
-	{
-		return "Entity";
-	}
+	virtual std::string getName() = 0; //pure virtual function that needs to be overwritten in the subclass (acts like an interface) 
+	
 };
 
 class Player : public Entity
@@ -31,13 +29,13 @@ void PrintName(Entity* ent)
 
 int main()
 {
-	Entity* e = new Entity();
+	Entity* e = new Player("");	//class can only be instantiated if it implements the pure virtual function (in this case getName())
 	PrintName(e);
 	//output is "Entity"
 
 	Player* p = new Player("Otti");
 	PrintName(p);
-	//expected output is "Otti" but it is only "Otti" when 'getName()' in the Entity-class is marked with the 'virtual' keyword and then overriden in the derived child class
+	//expected output is "Otti" but it is only "Otti" when 'getName()' in the Entity-class is marked with the 'virtual' keyword and then overwritten in the derived child class
 
 	std::cin.get();
 }
