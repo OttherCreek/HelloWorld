@@ -1,69 +1,43 @@
 #include <iostream>
+#include <string>
 
-class Log
+class Entity
 {
-public:		//public variables
-	const int LogLevelError = 0;
-	const int LogLevelWarning = 1;
-	const int LogLevelInfo = 2;
+public:
+	virtual std::string getName()	//virtual indicates that this method can be overriden in a derived child class
+	{
+		return "Entity";
+	}
+};
+
+class Player : public Entity
+{
 private:
-	int m_LogLevel=LogLevelInfo;
-public:		//public functions
-	void SetLevel(int level)
-	{
-		m_LogLevel = level;
-	}
+	std::string m_Name;
+public:
+	Player(const std::string& name)
+		: m_Name(name){}
 
-	void Error(const char* message)
+	std::string getName() override	//override indicates that this method overrides a method in the base class
 	{
-		if(m_LogLevel>=LogLevelError)
-			std::cout << "[ERROR]: " << message << std::endl;
-	}
-	
-	void Warn(const char* message)
-	{
-		if(m_LogLevel>=LogLevelWarning)
-			std::cout << "[WARNING]: "<< message << std::endl;
-	}
-
-	void Info(const char* message)
-	{
-		if(m_LogLevel>=LogLevelInfo)
-			std::cout << "[INFO]: " << message << std::endl;
+		return m_Name;
 	}
 };
 
-struct Entity
+void PrintName(Entity* ent)
 {
-	static int x, y;
-
-	static void Print()
-	{
-		std::cout << x << ", " << y << std::endl;
-	}
-};
-
-int Entity::x;
-int Entity::y;
+	std::cout << ent->getName() << std::endl;
+}
 
 int main()
 {
-	Log log;
-	log.SetLevel(log.LogLevelInfo);
-	log.Warn("Hello");
-	log.Info("Hello");
-	log.Error("Hello");
+	Entity* e = new Entity();
+	PrintName(e);
+	//output is "Entity"
 
-	Entity e;
-	e.x = 2;
-	e.y = 3;
-
-	Entity e1;
-	e1.x = 5;
-	e1.y = 6;
-
-	Entity::Print();
-	Entity::Print();
+	Player* p = new Player("Otti");
+	PrintName(p);
+	//expected output is "Otti" but it is only "Otti" when 'getName()' in the Entity-class is marked with the 'virtual' keyword and then overriden in the derived child class
 
 	std::cin.get();
 }
