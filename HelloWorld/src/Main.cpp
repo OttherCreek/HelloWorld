@@ -1,16 +1,40 @@
 #include <iostream>
 #include <string>
 
-void printString(std::string& str) {
-	std::cout << str << std::endl;
+struct Vector2
+{
+	float x, y;
+
+	Vector2(float x, float y)
+		:x(x),y(y){}
+
+	Vector2 operator+(const Vector2& other) const {
+		return Vector2(x + other.x, y + other.y);
+	}
+
+	Vector2 operator*(const Vector2& other) const {
+		return Vector2(x * other.x, y * other.y);
+	}
+
+	bool operator==(const Vector2& other) const {
+		return x == other.x && y == other.y;
+	}
+};
+
+std::ostream& operator<<(std::ostream& stream, const Vector2& other) {
+	stream << other.x << ", " << other.y;
+	return stream;
 }
 
 int main()
 {
-	std::string name = std::string("Cherno")+=" hello!";
+	Vector2 position(4.0f, 4.0f);
+	Vector2 speed(0.5f, 1.5f);
+	Vector2 powerup(1.1f, 1.1f);
 
-	printString(name);
+	Vector2 res = position + speed * powerup;
 
+	std::cout << res << std::endl;
 
 	std::cin.get();
 }
